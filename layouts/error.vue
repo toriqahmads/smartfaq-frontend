@@ -9,9 +9,9 @@
         {{ error.message }}
       </p>
       <b-link to="/">
-        <fa-layer class="fa-fw">
-          <fa :icon="['fas', 'arrow-left']" />
-        </fa-layer>
+        <fa-layers class="fa-fw">
+          <fa-icon :icon="['fas', 'arrow-left']" />
+        </fa-layers>
         Kembali Halaman Awal
       </b-link>
     </div>
