@@ -31,6 +31,15 @@ export const mutations = {
 }
 
 export const actions = {
+  async changeProfile ({ commit }, payload) {
+    try {
+      const info = await this.$api.authorization.changeProfile(payload)
+      commit('setInfo', info)
+      return Promise.resolve()
+    } catch (err) {
+      return Promise.reject(err)
+    }
+  },
   async refresh ({ commit }, _payload) {
     try {
       const { token } = await this.$api.authorization.refresh()

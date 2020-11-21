@@ -1,4 +1,13 @@
 export default {
+  async changeProfile (data) {
+    try {
+      const { id, ...redata } = data
+      const { result } = await this.$axios.$put(`/user/${id}`, redata)
+      return result
+    } catch (err) {
+      return Promise.reject(err)
+    }
+  },
   async refresh () {
     try {
       const { result: { access_token } } = await this.$axios.$post('/auth/refresh')

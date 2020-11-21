@@ -19,6 +19,10 @@ export default {
     ]
   },
 
+  router: {
+    middleware: ['authorization']
+  },
+
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['@/assets/styles/app.scss'],
 
@@ -41,9 +45,12 @@ export default {
       {
         path: '~/components/common/',
         prefix: 'Common'
+      },
+      {
+        path: '~/components/setting/',
+        prefix: 'Setting'
       }
     ]
-
   },
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)

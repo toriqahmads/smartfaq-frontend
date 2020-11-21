@@ -1,4 +1,4 @@
-export default function ({ store, $axios, params }) {
+export default function ({ store, $axios }) {
   const token = store.getters['authorization/token']
   const refresh_token = store.getters['authorization/refresh_token']
   if (_.isEmpty(refresh_token)) {

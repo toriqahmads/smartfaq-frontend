@@ -19,7 +19,7 @@
           Setting
         </b-dropdown-item>
         <b-dropdown-divider />
-        <b-dropdown-item>
+        <b-dropdown-item @click="clickLogout">
           Logout
         </b-dropdown-item>
       </b-nav-item-dropdown>
@@ -45,6 +45,12 @@ export default {
           this.$emit('toggle-sidebar', false)
         }
       }
+    },
+    clickLogout () {
+      this.$store.commit('authorization/setToken', '')
+      this.$store.commit('authorization/setRefreshToken', '')
+      this.$store.commit('authorization/setInfo', {})
+      this.$router.push('/login')
     }
   }
 }

@@ -5,7 +5,7 @@ const ls = new SecureLS({ isCompression: true })
 
 export default function ({ store }) {
   createPersistedState({
-    key: 'cronjob',
+    key: 'smartfaq',
     paths: ['authorization.token', 'authorization.refresh_token', 'authorization.info'],
     storage: {
       getItem: key => ls.get(key),
