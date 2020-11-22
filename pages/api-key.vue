@@ -1,14 +1,11 @@
 <template>
   <b-row>
     <b-col cols="12">
-      <response-pencarian v-model="cari" />
-    </b-col>
-    <b-col cols="12">
       <b-card no-body class="mb-3">
         <b-card-header class="d-flex align-items-center ">
-          Response Lists
+          Api Key Lists
           <b-button-group class="ml-auto" size="sm">
-            <b-button variant="primary" :disabled="$fetchState.pending" @click="modal.tambah = true">
+            <b-button variant="primary" :disabled="$fetchState.pending" @click="createApi">
               <fa-layers class="fa-fw">
                 <fa-icon :icon="['fas', 'plus']" />
               </fa-layers>
@@ -27,26 +24,14 @@
           :items="lists"
           :busy="$fetchState.pending"
         >
-          <template #table-busy>
-            <div class="text-center text-danger my-2">
-              <b-spinner class="align-middle" />
-              <strong>Loading...</strong>
-            </div>
-          </template>
-          <template #cell(context)="{item}">
-            {{ $tools.categoryNormalize(item.context) }}
-          </template>
-          <template #cell(intent)="{item}">
-            {{ $tools.categoryNormalize(item.intent) }}
-          </template>
           <template #cell(actions)="{item}">
             <b-button-group size="sm">
-              <b-button variant="primary" @click="clickActions(item, 'edit')">
+              <b-button variant="primary" @click="copyFile(item)">
                 <fa-layers class="fa-fw">
-                  <fa-icon :icon="['fas', 'edit']" />
+                  <fa-icon :icon="['fas', 'copy']" />
                 </fa-layers>
               </b-button>
-              <b-button variant="danger" @click="clickActions(item, 'delete')">
+              <b-button variant="danger" @click="clickActions(item)">
                 <fa-layers class="fa-fw">
                   <fa-icon :icon="['fas', 'trash']" />
                 </fa-layers>
@@ -64,60 +49,38 @@
         </b-card-footer>
       </b-card>
     </b-col>
-    <response-modal-tambah v-model="modal.tambah" @refetch="refetch" />
-    <response-modal-edit v-model="modal.edit" @refetch="refetch" />
   </b-row>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import * as clipboard from 'clipboard-polyfill/text'
 
 export default {
-  middleware: ['is-auth', 'is-refresh'],
   async fetch () {
     try {
-      await this.$store.dispatch('response/category')
-    } catch (err) {}
-    try {
-      await this.$store.dispatch('response/getAll', {
-        ...this.cari,
-        page: this.page,
-        per_page: this.perpage
-      })
+      await this.$store.dispatch('apikey/getAll')
     } catch (err) {}
   },
   data () {
     return {
-      cari: {},
       page: 1,
-      perpage: 10,
-      modal: {
-        tambah: false,
-        edit: false
-      }
+      perpage: 10
     }
   },
   computed: {
-    ...mapGetters('response', {
+    ...mapGetters('apikey', {
       lists: 'lists',
       pagination: 'pagination'
     }),
     fields () {
       return [
-        'context',
-        'intent',
-        'paragraph',
+        'key',
         'actions'
       ]
     }
   },
   watch: {
-    cari: {
-      deep: true,
-      async handler () {
-        await this.refetch()
-      }
-    },
     async page () {
       await this.$fetch()
     }
@@ -126,48 +89,67 @@ export default {
     this.setPageTitle()
   },
   methods: {
+    async createApi () {
+      try {
+        await this.$store.dispatch('apikey/create')
+        await this.$fetch()
+      } catch (err) {
+        this.$tools.notification({
+          title: 'Error',
+          type: 'error',
+          message: err.message
+        })
+      }
+    },
     async refetch () {
       this.page = 1
       await this.$fetch()
     },
+    async copyFile (item) {
+      try {
+        await clipboard.writeText(item.key)
+      } catch (err) {
+        this.$tools.notification({
+          title: 'Error',
+          type: 'error',
+          message: err.message
+        })
+      }
+    },
     setPageTitle () {
       this.$store.commit('page-title/setAll', {
-        title: 'Response',
+        title: 'Api Key',
         breadcrumb: [
           {
             text: 'Dashboard',
             to: '/'
           },
           {
-            text: 'Response',
+            text: 'Api Key',
             active: true
           }
         ]
       })
     },
-    async clickActions (item, method = 'edit') {
+    async clickActions (item) {
       try {
-        await this.$store.dispatch('response/getById', item)
-        if (method === 'edit') {
-          this.modal.edit = true
-        } else {
-          const res = await this.$swal({
-            title: 'Yakin hapus?',
-            text: 'Kamu tidak bisa restore data ini',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Hapus',
-            cancelButtonText: 'Tidak'
+        await this.$store.dispatch('apikey/getById', item)
+        const res = await this.$swal({
+          title: 'Yakin hapus?',
+          text: 'Kamu tidak bisa restore data ini',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Hapus',
+          cancelButtonText: 'Tidak'
+        })
+        if (res.value) {
+          await this.$store.dispatch('apikey/delete', item)
+          await this.refetch()
+          this.$tools.notification({
+            title: 'Success',
+            type: 'success',
+            message: 'Berhasil hapus data'
           })
-          if (res.value) {
-            await this.$store.dispatch('response/delete', item)
-            await this.refetch()
-            this.$tools.notification({
-              title: 'Success',
-              type: 'success',
-              message: 'Berhasil hapus data'
-            })
-          }
         }
       } catch (err) {
         this.$tools.notification({

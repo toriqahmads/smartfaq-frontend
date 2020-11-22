@@ -11,9 +11,7 @@
     <b-navbar-nav class="ml-auto">
       <b-nav-item-dropdown right>
         <template #button-content>
-          <fa-layers class="fa-fw">
-            <fa-icon :icon="['fas', 'user']" />
-          </fa-layers>
+          {{ info.name }}
         </template>
         <b-dropdown-item to="/setting">
           Setting
@@ -27,12 +25,18 @@
   </b-navbar>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: {
     toggle: {
       type: Boolean,
       require: false
     }
+  },
+  computed: {
+    ...mapGetters('authorization', {
+      info: 'info'
+    })
   },
   methods: {
     clickBars () {

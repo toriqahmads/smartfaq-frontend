@@ -161,6 +161,7 @@ export default {
           })
           if (res.value) {
             await this.$store.dispatch('dataset/delete', item)
+            await this.refetch()
             this.$tools.notification({
               title: 'Success',
               type: 'success',

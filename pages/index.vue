@@ -1,5 +1,9 @@
 <template>
-  <div>a</div>
+  <b-row>
+    <b-col cols="12">
+      <b-jumbotron header="Smart FAQ" lead="Aplikasi Smart FAQ" />
+    </b-col>
+  </b-row>
 </template>
 
 <script>

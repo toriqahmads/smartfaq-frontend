@@ -22,6 +22,19 @@
         </div>
       </div>
     </template>
+    <div class="sidebar-lists">
+      <div class="sidebar-lists-title">
+        Training
+      </div>
+      <div class="sidebar-menus">
+        <b-link class="sidebar-menus-link" @click.prevent="clickStartTraining">
+          <fa-layers class="fa-fw">
+            <fa-icon :icon="['fas', 'play']" />
+          </fa-layers>
+          Start Training
+        </b-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -45,6 +58,22 @@ export default {
         if (this.toggle) {
           this.$emit('toggle-sidebar', false)
         }
+      }
+    },
+    async clickStartTraining () {
+      try {
+        await this.$api.train.start()
+        this.$tools.notification({
+          title: 'Success',
+          type: 'success',
+          message: 'Start Training'
+        })
+      } catch (err) {
+        this.$tools.notification({
+          title: 'Error',
+          type: 'error',
+          message: err.message
+        })
       }
     }
   }
