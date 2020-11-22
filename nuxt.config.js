@@ -19,6 +19,10 @@ export default {
     ]
   },
 
+  loading: {
+    color: 'white'
+  },
+
   router: {
     middleware: ['authorization']
   },
@@ -35,7 +39,8 @@ export default {
     '@/plugins/axios',
     '@/plugins/vue-fragment',
     '@/plugins/vuelidate',
-    '@/plugins/vue-select'
+    '@/plugins/vue-select',
+    '@/plugins/vue-sweetalert2'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -49,6 +54,22 @@ export default {
       {
         path: '~/components/setting/',
         prefix: 'Setting'
+      },
+      {
+        path: '~/components/dataset/',
+        prefix: 'Dataset'
+      },
+      {
+        path: '~/components/dataset/modal',
+        prefix: 'DatasetModal'
+      },
+      {
+        path: '~/components/response/',
+        prefix: 'Response'
+      },
+      {
+        path: '~/components/response/modal',
+        prefix: 'ResponseModal'
       }
     ]
   },

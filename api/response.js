@@ -54,7 +54,7 @@ export default {
   },
   async category () {
     try {
-      const { result } = await this.$axios.$get('/response/catetory')
+      const { result } = await this.$axios.$get('/response/category')
       return result
     } catch (err) {
       return Promise.reject(err)
