@@ -8,23 +8,6 @@
   >
     <b-form @submit.prevent="submitSave">
       <b-form-group
-        label="Context"
-        label-for="context"
-        label-class="small"
-      >
-        <b-input
-          id="context"
-          v-model="$v.form.context.$model"
-          placeholder="Context"
-          :state="validData($v.form.context)"
-        />
-        <template v-if="validData($v.form.context) !== null && !validData($v.form.context)">
-          <b-form-invalid-feedback v-if="!$v.form.context.required">
-            Context harus di isi
-          </b-form-invalid-feedback>
-        </template>
-      </b-form-group>
-      <b-form-group
         label="Intent"
         label-for="intent"
         label-class="small"
@@ -42,19 +25,19 @@
         </template>
       </b-form-group>
       <b-form-group
-        label="Paragraph"
-        label-for="paragraph"
+        label="Response"
+        label-for="response"
         label-class="small"
       >
         <b-textarea
-          id="paragraph"
-          v-model="$v.form.paragraph.$model"
+          id="response"
+          v-model="$v.form.response.$model"
           placeholder="Paragraph"
-          :state="validData($v.form.paragraph)"
+          :state="validData($v.form.response)"
         />
-        <template v-if="validData($v.form.paragraph) !== null && !validData($v.form.paragraph)">
-          <b-form-invalid-feedback v-if="!$v.form.paragraph.required">
-            Paragraph harus di isi
+        <template v-if="validData($v.form.response) !== null && !validData($v.form.response)">
+          <b-form-invalid-feedback v-if="!$v.form.response.required">
+            Response harus di isi
           </b-form-invalid-feedback>
         </template>
       </b-form-group>
@@ -76,14 +59,13 @@ export default {
   data () {
     return {
       form: {
-        context: '',
         intent: '',
-        paragraph: ''
+        response: ''
       }
     }
   },
   computed: {
-    ...mapGetters('dataset', {
+    ...mapGetters('response', {
       categorys: 'category'
     }),
     categoryOpts () {
@@ -112,17 +94,15 @@ export default {
   },
   validations: {
     form: {
-      context: { required },
       intent: { required },
-      paragraph: { required }
+      response: { required }
     }
   },
   methods: {
     resetModal () {
       this.form = {
-        context: '',
         intent: '',
-        paragraph: ''
+        response: ''
       }
       this.$nextTick(() => {
         this.$v.$reset()
@@ -141,13 +121,13 @@ export default {
         return
       }
       try {
-        await this.$store.dispatch('dataset/create', this.form)
+        await this.$store.dispatch('response/create', this.form)
         this.modal = false
         this.$emit('refetch')
         this.$tools.notification({
           title: 'Success',
           type: 'success',
-          message: 'Berhasil tambah dataset'
+          message: 'Berhasil tambah response'
         })
       } catch (err) {
         this.modal = false

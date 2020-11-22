@@ -33,9 +33,6 @@
               <strong>Loading...</strong>
             </div>
           </template>
-          <template #cell(context)="{item}">
-            {{ $tools.categoryNormalize(item.context) }}
-          </template>
           <template #cell(intent)="{item}">
             {{ $tools.categoryNormalize(item.intent) }}
           </template>
@@ -104,9 +101,8 @@ export default {
     }),
     fields () {
       return [
-        'context',
         'intent',
-        'paragraph',
+        'response',
         'actions'
       ]
     }

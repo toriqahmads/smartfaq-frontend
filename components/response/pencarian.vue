@@ -1,45 +1,28 @@
 <template>
   <b-card class="mb-3" header="Pencarian">
-    <b-form-row>
-      <b-col md="6">
-        <b-form-group
-          label="Context"
-          label-for="context"
-          label-class="small"
-        >
-          <b-input
-            id="context"
-            placeholder="Context"
-            @input="searchContext"
-          />
-        </b-form-group>
-      </b-col>
-      <b-col md="6">
-        <b-form-group
-          label="Intent"
-          label-for="intent"
-          label-class="small"
-        >
-          <b-select
-            id="intent"
-            :value="category"
-            :options="categoryOpts"
-            placeholder="Context"
-            @input="searchIntent"
-          />
-        </b-form-group>
-      </b-col>
-    </b-form-row>
     <b-form-group
-      label="Paragraph"
-      label-for="paragraph"
+      label="Intent"
+      label-for="intent"
+      label-class="small"
+    >
+      <b-select
+        id="intent"
+        :value="category"
+        :options="categoryOpts"
+        placeholder="Context"
+        @input="searchIntent"
+      />
+    </b-form-group>
+    <b-form-group
+      label="Response"
+      label-for="response"
       label-class="small"
       class="mb-0"
     >
       <b-input
-        id="paragraph"
-        placeholder="Paragraph"
-        @input="searchParagraph"
+        id="response"
+        placeholder="Response"
+        @input="searchResponse"
       />
     </b-form-group>
   </b-card>
@@ -58,14 +41,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('dataset', {
+    ...mapGetters('response', {
       categorys: 'category'
     }),
-    cari () {
-      const re = {}
-      re.context = _.has(this.value, 'context') && !_.isEmpty(this.value.context) ? this.value.context : ''
-      return re
-    },
     category () {
       return _.has(this.value, 'category') && !_.isEmpty(this.value.category) ? {
         value: this.value.category,
@@ -89,15 +67,6 @@ export default {
     }
   },
   methods: {
-    searchContext (val) {
-      const $value = { ...this.value }
-      if (!_.isEmpty(val)) {
-        $value.context = val
-      } else {
-        delete $value.context
-      }
-      this.$emit('input', $value)
-    },
     searchIntent (val) {
       const $value = { ...this.value }
       if (!_.isEmpty(val)) {
@@ -107,12 +76,12 @@ export default {
       }
       this.$emit('input', $value)
     },
-    searchParagraph (val) {
+    searchResponse (val) {
       const $value = { ...this.value }
       if (!_.isEmpty(val)) {
-        $value.paragraph = val
+        $value.response = val
       } else {
-        delete $value.paragraph
+        delete $value.response
       }
       this.$emit('input', $value)
     }
