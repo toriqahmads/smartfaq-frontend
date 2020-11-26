@@ -1,4 +1,4 @@
-export default function ({ store, $axios, $tools, params }) {
+export default function ({ store, $axios, $tools }) {
   $axios.onError((err) => {
     err = $tools.error(err)
     if (err.message.includes('Token has expired')) {
