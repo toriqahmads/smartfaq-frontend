@@ -39,11 +39,15 @@ export default {
         })
         this.$router.push('/')
       } catch (err) {
+        this.$store.commit('authorization/setToken', '')
+        this.$store.commit('authorization/setRefreshToken', '')
+        this.$store.commit('authorization/setInfo', {})
         this.$tools.notification({
           title: 'Error',
           type: 'error',
           message: err.message
         })
+        this.$router.push('/login')
       }
     }
   }
