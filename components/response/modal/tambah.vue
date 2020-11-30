@@ -1,7 +1,7 @@
 <template>
   <b-modal
     v-model="modal"
-    title="Tambah Dataset"
+    title="Tambah Response"
     @show="resetModal"
     @hidden="resetModal"
     @ok="submitSave"

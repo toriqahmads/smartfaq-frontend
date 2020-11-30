@@ -76,7 +76,7 @@ export default {
   data () {
     return {
       form: {
-        context: '',
+        context: 'nocontext',
         intent: '',
         paragraph: ''
       }
@@ -120,7 +120,7 @@ export default {
   methods: {
     resetModal () {
       this.form = {
-        context: '',
+        context: 'nocontext',
         intent: '',
         paragraph: ''
       }

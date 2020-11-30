@@ -1,30 +1,36 @@
 <template>
   <b-card class="mb-3" header="Pencarian">
-    <b-form-group
-      label="Intent"
-      label-for="intent"
-      label-class="small"
-    >
-      <b-select
-        id="intent"
-        :value="category"
-        :options="categoryOpts"
-        placeholder="Context"
-        @input="searchIntent"
-      />
-    </b-form-group>
-    <b-form-group
-      label="Response"
-      label-for="response"
-      label-class="small"
-      class="mb-0"
-    >
-      <b-input
-        id="response"
-        placeholder="Response"
-        @input="searchResponse"
-      />
-    </b-form-group>
+    <b-form-row>
+      <b-col md="6">
+        <b-form-group
+          label="Intent"
+          label-for="intent"
+          label-class="small"
+        >
+          <b-select
+            id="intent"
+            :value="category"
+            :options="categoryOpts"
+            placeholder="Context"
+            @input="searchIntent"
+          />
+        </b-form-group>
+      </b-col>
+      <b-col md="6">
+        <b-form-group
+          label="Response"
+          label-for="response"
+          label-class="small"
+          class="mb-0"
+        >
+          <b-input
+            id="response"
+            placeholder="Response"
+            @input="searchResponse"
+          />
+        </b-form-group>
+      </b-col>
+    </b-form-row>
   </b-card>
 </template>
 

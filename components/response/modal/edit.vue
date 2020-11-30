@@ -1,7 +1,7 @@
 <template>
   <b-modal
     v-model="modal"
-    title="Ganti Dataset"
+    title="Ganti Response"
     @show="setData"
     @hidden="resetModal"
     @ok="submitSave"
