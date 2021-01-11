@@ -1,4 +1,3 @@
-
 <template>
   <b-col lg="6">
     <div class="text-center mt-4">

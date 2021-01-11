@@ -91,7 +91,7 @@
           </b-col>
           <b-col md="6">
             <b-form-group
-              label="Kon. Password"
+              label="Konfirmasi Password"
               label-for="kon_password"
               label-class="small"
             >
@@ -104,14 +104,14 @@
               />
               <template v-if="validData($v.form.kon_password) !== null && !validData($v.form.kon_password)">
                 <b-form-invalid-feedback v-if="!$v.form.password.sameAs">
-                  Kon. Password harus sama dengan password
+                  Konfirmasi. Password harus sama dengan password
                 </b-form-invalid-feedback>
               </template>
             </b-form-group>
           </b-col>
         </b-form-row>
         <b-button type="submit" variant="primary" class="w-100">
-          Login
+          Register
         </b-button>
       </b-card-body>
       <b-card-footer class="text-center">
